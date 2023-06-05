@@ -1,4 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap');
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -7,14 +9,129 @@
 .main {
   width: 100vw;
   min-height: 100vh;
-  background-image: url("../public/assets/background.svg");
+  background-image: url("/assets/background.svg");
   background-repeat:no-repeat;
   position: fixed;
   display: flex;
   justify-content: center;
-  padding: 120px 24px 160px 24px;
+  /* padding: 120px 24px 160px 24px; */
   pointer-events: none;
   z-index: -1;
+}
+
+.card{
+  width: 320px;
+  height: 350px;
+
+  font-family: "Montserrat";
+
+  background: linear-gradient(0.14turn, rgb(189, 252, 219), rgba(36, 119, 161, 0.76));
+
+  box-shadow: grey 1px 1px 5px;
+
+  @apply m-3 p-2 flex flex-col justify-center items-center border-2 rounded-3xl border-violet-950
+}
+
+.card:hover{
+  box-shadow: rgb(255, 128, 244) 0px 0px 20px;
+}
+
+.navig{
+  position:sticky;
+  top: 0;
+  background: linear-gradient(0.11turn, rgba(174, 142, 255, 0.836), rgba(101, 255, 191, 0.877));
+  font-family: "Montserrat", sans-serif;
+
+  @apply flex z-50 justify-between border-solid border-2 border-indigo-400 bg-emerald-100
+}
+
+.navig p {
+  color: #002c52;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.navig p:hover {
+  color: #ffffff;
+}
+
+
+
+/* Shining Card effect */
+@keyframes shine {
+  from {
+    left: -300px;
+  }
+
+  to {
+    left: 500px;
+  }
+}
+
+.box {
+  /* position: absolute; */
+  top: 50%;
+  left: 50%;
+  transform: translate(0%, 0%);
+  overflow: hidden;
+}
+
+.box:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 20%;
+  height: 100%;
+
+  background: rgba(255, 255, 255, 0.04);
+  transform: skewX(-30deg);
+  transition: 0.3s;
+  transition-property: all;
+  transition-timing-function: ease-in-out;
+  transition-delay: 0s ;
+  z-index: -10;
+
+  animation-duration: 2.5s;
+  animation-name: shine;
+  animation-iteration-count: infinite;
+  animation-direction:alternate-reverse;
+} 
+
+.box:hover:before {
+
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.list_card{
+  background : linear-gradient(0.11turn, rgba(174, 142, 255, 0.568), rgba(101, 255, 240, 0.63));
+  @apply flex flex-row flex-wrap items-start justify-around border-2 border-emerald-400 mx-5 p-3 rounded-2xl w-full
+}
+
+.side_menu{
+  font-family: 'Kanit';
+  background: linear-gradient(0.11turn, rgba(174, 142, 255, 0.836), rgba(101, 255, 191, 0.877));
+  @apply border-2 border-indigo-300 px-3 h-full rounded-r-xl
+}
+
+.form_label {
+  @apply flex flex-col mb-8 p-3 rounded-xl border-yellow-400 border-4
+}
+
+.add_to_cart_btn {
+  @apply rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all text-center text-sm flex items-center justify-center h-9;
+}
+
+.new_item {
+  @apply rounded-full border border-black bg-white my-5 py-1.5 px-5 text-black transition-all text-center text-sm flex items-center justify-center h-9 hover:scale-105;
+}
+
+.glassmorphism {
+  @apply rounded-xl border border-gray-200 bg-white/20 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur p-5;
+}
+
+.form_textarea {
+  @apply flex rounded-lg h-12 mb-2 p-3 text-sm text-emerald-800 outline-blue-300 border border-slate-400;
 }
 
 .flex-center {

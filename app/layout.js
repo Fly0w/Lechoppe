@@ -13,22 +13,24 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <div className='main'>
-             <div className="gradient"/>
         </div>
 
-        <header className="flex-center">
-          <Link href="/" >
-            <Image 
-              src="/assets/icons/logo_transparent.png"
-              alt="logo l'échoppe"
-              height={250}
-              width={250}
-            />
-          </Link>
-        </header>
 
-        <main className="app">
+        <main className="">
+
           <Nav />
+
+          <div className="flex-center my-6">
+            <Link href="/" >
+              <Image 
+                src="/assets/icons/logo_transparent.png"
+                alt="logo l'échoppe"
+                height={350}
+                width={350}
+              />
+            </Link>
+          </div>
+
           {children}
         </main> 
       </body>

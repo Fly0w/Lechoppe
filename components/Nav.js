@@ -8,7 +8,7 @@ import { SlBasket } from "react-icons/sl";
 const Nav = () => {
   return (    
     <>   
-      <nav className="flex justify-between border-solid border-2 border-indigo-600 bg-stone-400">
+      <nav className="navig">
         <div className="flex items-center">
           <Link href="/" >
             <p className="mx-6">Home</p>

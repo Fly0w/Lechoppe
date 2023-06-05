@@ -1,49 +1,70 @@
-import React from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
+'use client'
+
+//Todo
+// - Clic redirige sur page item
+// - récupère item database
 
 
-const Card = ({ listImg  }) => {
+import { useState, useEffect } from 'react'
+
+
+const Card = ({ itemName, listImg, price }) => {
+    const [selectedImg, setSelectedImg] = useState(listImg[0].title);
+    const [selectedUrl, setSelectedUrl] = useState(listImg[0].src);
+    const [selectedAlt, setSelectedAlt] = useState(listImg[0].alt);
+
+
+    useEffect(() => {
+        console.log(selectedImg)
+    
+    }, [selectedImg])
+    
+
   return (
-    <article className=' m-4 h-72 w-72 border-2 border-indigo-600 bg-stone-400'>
-        <div className='flex flex-row'>
-            <figure className='m-3 w-4/6'>
-                <img 
-                    src={listImg.img1.src}
-                    alt={listImg.img1.alt}
+    <div className="card box">
+        <h2 className='capitalize text-center text-2xl cursor-pointer'
+            onClick={() => console.log("click titre")}
+        >{itemName}</h2>
+        <div className='w-fit'>
+
+            <figure className='my-3 mx-1 flex justify-center items-center w-72'>
+                <img className='h-40 cursor-pointer bg-white'
+                    src={selectedUrl}
+                    alt={selectedAlt}
+                    onClick={() => console.log("click image principale")}
                 />
             </figure>
-        
-            <div className='flex flex-col'>
-                <figure className='my-1'>
-                    <img 
-                        src={listImg.img2.src}
-                        alt={listImg.img2.alt}
-                        height={100}
-                        width={100}
-                    />
-                </figure>
-                <figure className='my-1'>
-                    <img 
-                        src={listImg.img3.src}
-                        alt={listImg.img3.alt}
-                        height={100}
-                        width={100}
-                    />
-                </figure >
-                <figure className='my-1'>
-                    <img 
-                        src={listImg.img4.src}
-                        alt={listImg.img4.alt}
-                        height={100}
-                        width={100}
-                    />
-                </figure>
-            </div>
 
+            <div className='flex flex-raw justify-start w-72'>
+            {listImg.map((image, key) => (
+                image.src 
+                ?
+                <figure className='mx-1' key={key}>
+                    <img className="h-10 cursor-pointer bg-white"
+                        src={image.src}
+                        alt={image.alt}
+                        onClick={() => {
+                            setSelectedImg(image.title);
+                            setSelectedUrl(image.src);
+                            setSelectedAlt(image.alt)
+                        }}
+                    />
+                </figure>
+                : <div key={key}></div> //If url doesn't exist
+            ))}
+            </div>
         </div>
-        <p>3000 ¥</p>
-    </article>
+
+        <div className='flex flex-raw align-middle items-center my-2'>
+            <p className='my-2 mx-3 text-xl text-emerald-900'>{price} ¥</p>
+            <button 
+                type="button" 
+                className="add_to_cart_btn"
+                onClick={()=> console.log("add to cart")}>Add to cart
+            </button>
+        </div>
+        
+    </div>
   )
 }
 
