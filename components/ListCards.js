@@ -1,5 +1,13 @@
 'use client'
 
+
+// Todo :
+// - import categories
+
+
+
+
+
 import Card from "./Card"
 import { useState, useEffect } from "react"
 
@@ -44,7 +52,7 @@ const ListCards = ({ category }) => {
     <div className="list_card">
         {listItems.map((item, key) => {
             if(category === "All" || item.categories.includes(category.toLowerCase())){
-                return (<Card key={key} itemName={item.name} listImg={item.urls} price={item.price} />)
+                return (<Card key={key} item={item}/>)
         }})}
         
     </div>

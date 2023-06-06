@@ -1,5 +1,3 @@
-import React from 'react'
-
 const SearchBar = ({ handleSearch, placeHolder }) => {
   return (
     <div className='my-3'>

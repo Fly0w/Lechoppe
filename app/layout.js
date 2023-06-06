@@ -20,13 +20,13 @@ export default function RootLayout({ children }) {
 
           <Nav />
 
-          <div className="flex-center my-6">
+          <div className="flex-center my-6 h-20">
             <Link href="/" >
               <Image 
                 src="/assets/icons/logo_transparent.png"
                 alt="logo l'échoppe"
-                height={350}
-                width={350}
+                height={200}
+                width={200}
               />
             </Link>
           </div>
