@@ -1,6 +1,9 @@
-const ReviewCard = () => {
+const ReviewCard = ({ creator, text }) => {
   return (
-    <div>ReviewCard</div>
+    <div>
+      <p>{creator}</p>
+      <p>{text}</p>
+    </div>
   )
 }
 

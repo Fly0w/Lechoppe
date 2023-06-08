@@ -4,7 +4,7 @@ import Item from "@/models/items";
 /* Endpoint for creating a new item */
 
 export const POST = async (req) => {
-    const { itemName, urls, category, price, description } = await req.json();
+    const { itemName, urls, categories, price, description } = await req.json();
     try {
         await connectToDB();
 
@@ -15,7 +15,7 @@ export const POST = async (req) => {
             name: itemName,
             description: description,
             price: price,
-            categories: category,
+            categories: categories,
             reviews: [],
           });
 

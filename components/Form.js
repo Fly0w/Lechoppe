@@ -1,22 +1,35 @@
 'use client'
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from 'next/navigation';
 
-const Form = () => {
+const Form = ({ submitForm, itemInfo, redirect }) => {
     const [itemName, setItemName] = useState("");
     const [urls, setUrls] = useState([
-      { title: "img1", src: "", alt: "N/A" },
-      { title: "img2", src: "", alt: "N/A" },
-      { title: "img3", src: "", alt: "N/A" },
-      { title: "img4", src: "", alt: "N/A" }
+      { title: "img1", src: "", alt: "" },
+      { title: "img2", src: "", alt: "" },
+      { title: "img3", src: "", alt: "" },
+      { title: "img4", src: "", alt: "" }
     ]);
-    const [category, setCategory] = useState([]);
+    const [categories, setcategories] = useState([]);
     const [price, setPrice] = useState(0);
     const [description, setDescription] = useState("");
 
     const router = useRouter();
     
+
+    useEffect(() => {
+      if(itemInfo){
+        setItemName(itemInfo.name)
+        setUrls(itemInfo.urls)
+        setcategories(itemInfo.categories)
+        setPrice(itemInfo.price)
+        setDescription(itemInfo.description)
+      }
+    }, [itemInfo])
+    
+
+
     if (price < 1){
       setPrice(1)
     }
@@ -27,20 +40,17 @@ const Form = () => {
 
       try {
         //envoie les infos au server pour créer l'item dans la db
-        const response = await fetch('/api/items/new', {
-          method: "POST",
-          body: JSON.stringify({
-            itemName : itemName,
-            urls : urls,
-            category : category,
-            price : price,
-            description : description
-          })
-        })
+        const response = await submitForm({
+          itemName : itemName,
+          urls : urls,
+          categories : categories,
+          price : price,
+          description : description
+        });
         console.log(response.json())
         if(response.ok) {
-          router.push('/')
-      } 
+          router.push(redirect)
+        } 
       } catch (error) {
         console.log(error)
       }
@@ -53,9 +63,9 @@ const Form = () => {
       setUrls(updatedUrls);
     };
 
-    const handleCategoryChange = (event) => {
+    const handlecategoriesChange = (event) => {
       const selectedCategories = Array.from(event.target.selectedOptions, (option) => option.value);
-      setCategory(selectedCategories);
+      setcategories(selectedCategories);
     };
 
   return (
@@ -68,8 +78,8 @@ const Form = () => {
         </p>
 
         <form 
-        onSubmit={(e) => handleSubmit(e)}
-        className="mt-10 w-full max-w-2x1 flex-col gap-7 glassmorphism"
+          onSubmit={(e) => handleSubmit(e)}
+          className="mt-10 w-full max-w-2x1 flex-col gap-7 glassmorphism"
         >
 
 {/* Item name */}
@@ -104,15 +114,22 @@ const Form = () => {
 {/* Item description */}
         <label className="form_label">
             <span className="font-semibold text-base text-gray-700">Item Description :</span>
-            <textarea className="h-24 border border-sky-400" onChange={(event) => setDescription(event.target.value)} />
+            <textarea 
+              value={description} 
+              className="h-24 border border-sky-400" 
+              onChange={(event) => setDescription(event.target.value)} />
         </label>
 
-{/* Item category */}
+{/* Item categories */}
         <label className="form_label">
-            <span className="font-semibold text-base text-gray-700">Item Category :</span>
-            <select className="h-16 border border-sky-400" multiple value={category} onChange={handleCategoryChange}>
-              <option value="games">Games</option>
-              <option value="anime">Anime</option>
+            <span className="font-semibold text-base text-gray-700">Item categories :</span>
+            <select 
+            className="h-16 border border-sky-400" 
+            multiple 
+            value={categories} 
+            onChange={handlecategoriesChange}>
+              <option value="Games">Games</option>
+              <option value="Anime">Anime</option>
             </select>
         </label>
 
@@ -120,49 +137,56 @@ const Form = () => {
 {/* Item url */}
         <label className="form_label">
             <span className="font-semibold text-base text-gray-700">Item URL Images :</span>
-            {urls.map((url, index) => (
-              index === 0
-              ? <div key={index} className="ml-3 mb-3"> 
-                  <label className=" text-emerald-700">Image 1 <span className="text-red-500 text-xs">Required</span></label>
+            {urls
+              ? urls.map((url, index) => (
+                index === 0
+                ? <div key={index} className="ml-3 mb-3"> 
+                    <label className=" text-emerald-700">Image 1 <span className="text-red-500 text-xs">Required</span></label>
+                    <div className="ml-3">
+                      <label>Url</label>
+                      <input
+                        value={url.src}
+                        type="text"
+                        onChange={(event) => handleUrlChange(index, "src", event.target.value)}
+                        required
+                        className="form_textarea w-full"
+                        placeholder="Paste URL here"
+                      />
+                      <label>Quick description</label>
+                      <input
+                        value={url.alt}
+                        type="text"
+                        onChange={(event) => handleUrlChange(index, "alt", event.target.value)}
+                        required
+                        className="form_textarea w-full"
+                        placeholder="Describe your image"
+                      />
+                    </div>
+                  </div>
+                : <div key={index} className="ml-3 mb-3"> 
+                  <label className=" text-emerald-700">Image {index+1}</label>
                   <div className="ml-3">
                     <label>Url</label>
                     <input
+                      value={url.src}
                       type="text"
                       onChange={(event) => handleUrlChange(index, "src", event.target.value)}
-                      required
                       className="form_textarea w-full"
                       placeholder="Paste URL here"
                     />
                     <label>Quick description</label>
                     <input
+                      value={url.alt}
                       type="text"
                       onChange={(event) => handleUrlChange(index, "alt", event.target.value)}
-                      required
                       className="form_textarea w-full"
                       placeholder="Describe your image"
                     />
                   </div>
                 </div>
-              : <div key={index} className="ml-3 mb-3"> 
-                <label className=" text-emerald-700">Image {index+1}</label>
-                <div className="ml-3">
-                  <label>Url</label>
-                  <input
-                    type="text"
-                    onChange={(event) => handleUrlChange(index, "src", event.target.value)}
-                    className="form_textarea w-full"
-                    placeholder="Paste URL here"
-                  />
-                  <label>Quick description</label>
-                  <input
-                    type="text"
-                    onChange={(event) => handleUrlChange(index, "alt", event.target.value)}
-                    className="form_textarea w-full"
-                    placeholder="Describe your image"
-                  />
-                </div>
-              </div>
-            ))}
+              ))
+            :<p>Loading Item Info...</p>
+            }
         </label>
 
         <div className="flex-end mx-3 mt-5 gap-4">

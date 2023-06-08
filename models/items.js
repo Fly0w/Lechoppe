@@ -18,7 +18,10 @@ const ItemSchema = new Schema({
         required: [true, "Categories are required"]
     },
     reviews: {
-        type: [String],
+        type: [{
+            creator: String,
+            text: String,
+        }],
     },    
     urls: {
         type: [{
