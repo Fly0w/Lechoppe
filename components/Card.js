@@ -1,11 +1,4 @@
 'use client'
-
-//Todo
-// - Clic redirige sur page item
-// - récupère item database
-
-
-
 // const item = {
 //     _id: "3472697Fiegfze3",
 //     categories: ['games'],
@@ -46,10 +39,10 @@ const Card = ({ item }) => {
 
     const router = useRouter();
 
-    useEffect(() => {
-        console.log(selectedImg)
+    // useEffect(() => {
+    //     console.log(selectedImg)
     
-    }, [selectedImg])
+    // }, [selectedImg])
     
     const goToItem = () => {
         router.push(`/product?id=${item._id}`)
@@ -91,7 +84,7 @@ const Card = ({ item }) => {
         </div>
 
         <div className='flex flex-raw align-middle items-center my-2'>
-            <p className='my-2 mx-3 text-xl text-emerald-900'>{item.price} ¥</p>
+            <p className='my-2 mx-3 text-xl text-emerald-900'>¥{item.price}</p>
             <button 
                 type="button" 
                 className="add_to_cart_btn"

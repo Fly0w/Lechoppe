@@ -3,7 +3,7 @@ import Link from "next/link"
 import { useState, useEffect } from "react"
 import { useRouter } from 'next/navigation';
 
-const Form = ({ submitForm, itemInfo, redirect }) => {
+const Form = ({ label, submitForm, itemInfo, redirect }) => {
     const [itemName, setItemName] = useState("");
     const [urls, setUrls] = useState([
       { title: "img1", src: "", alt: "" },
@@ -11,18 +11,23 @@ const Form = ({ submitForm, itemInfo, redirect }) => {
       { title: "img3", src: "", alt: "" },
       { title: "img4", src: "", alt: "" }
     ]);
-    const [categories, setcategories] = useState([]);
+    const [categories, setCategories] = useState("");
     const [price, setPrice] = useState(0);
     const [description, setDescription] = useState("");
 
     const router = useRouter();
+        
+
+    useEffect(() => {
+      console.log(categories)
+    }, [categories])
     
 
     useEffect(() => {
       if(itemInfo){
         setItemName(itemInfo.name)
         setUrls(itemInfo.urls)
-        setcategories(itemInfo.categories)
+        setCategories(itemInfo.categories)
         setPrice(itemInfo.price)
         setDescription(itemInfo.description)
       }
@@ -39,7 +44,7 @@ const Form = ({ submitForm, itemInfo, redirect }) => {
       e.preventDefault(); //Preventing browser auto refresh
 
       try {
-        //envoie les infos au server pour créer l'item dans la db
+        //Send the info to the db to create item
         const response = await submitForm({
           itemName : itemName,
           urls : urls,
@@ -47,6 +52,7 @@ const Form = ({ submitForm, itemInfo, redirect }) => {
           price : price,
           description : description
         });
+        
         console.log(response.json())
         if(response.ok) {
           router.push(redirect)
@@ -63,15 +69,11 @@ const Form = ({ submitForm, itemInfo, redirect }) => {
       setUrls(updatedUrls);
     };
 
-    const handlecategoriesChange = (event) => {
-      const selectedCategories = Array.from(event.target.selectedOptions, (option) => option.value);
-      setcategories(selectedCategories);
-    };
 
   return (
     <section className=" w-4/6 max-w-full flex-col">
         <h1 className="head_text text-center text-4xl mb-3">
-            Create Item
+            {label} Item
         </h1>
         <p className="text-center text-lg">
             Please fill in the information below
@@ -124,12 +126,20 @@ const Form = ({ submitForm, itemInfo, redirect }) => {
         <label className="form_label">
             <span className="font-semibold text-base text-gray-700">Item categories :</span>
             <select 
-            className="h-16 border border-sky-400" 
-            multiple 
+            className="h-12 border border-sky-400"  
             value={categories} 
-            onChange={handlecategoriesChange}>
-              <option value="Games">Games</option>
-              <option value="Anime">Anime</option>
+            onChange={(event) => setCategories(event.target.value)}>
+              <option value="">Select a Category</option>
+              <optgroup className="font-bold"  label="Games">
+                <option value="Games Minecraft">Minecraft</option>
+                <option value="Games Pokemon">Pokemon</option>
+                <option value="Games Genshin Impact">Genshin Impact</option>
+              </optgroup>
+              <optgroup className="font-bold" label="Anime">
+                <option value="Anime Attack On Titan">Attack On Titan</option>
+                <option value="Anime Demon Slayer">Demon Slayer</option>
+                <option value="Anime Bleach">Bleach</option>
+              </optgroup>
             </select>
         </label>
 

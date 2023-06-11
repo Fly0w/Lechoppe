@@ -7,7 +7,7 @@ export const GET = async (req, { params }) => {
     try {
         await connectToDB();
 
-        const itemInfo = await Item.find({_id : params.id})
+        const itemInfo = await Item.findOne({_id : params.id})
         
         return new Response(JSON.stringify(itemInfo), {status: 200})
 
@@ -23,20 +23,20 @@ export const PATCH = async (req, { params }) => {
     try {
         await connectToDB();
 
-        const existingItem = await Item.find({_id : params.id})
+        const existingItem = await Item.findOne({_id : params.id})
 
         //If the Item doesn't exist
         if (!existingItem) {
             return new Response("Item not found", {status: 404})
         }
 
-        existingItem[0].name = itemName;
-        existingItem[0].urls = urls;
-        existingItem[0].categories = categories;
-        existingItem[0].price = price;
-        existingItem[0].description = description;
+        existingItem.name = itemName;
+        existingItem.urls = urls;
+        existingItem.categories = categories;
+        existingItem.price = price;
+        existingItem.description = description;
       
-        await existingItem[0].save();
+        await existingItem.save();
 
         return new Response(JSON.stringify(existingItem), {status: 200})
 

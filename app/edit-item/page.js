@@ -14,7 +14,7 @@ export default function EditItem() {
     const getItemInfo = async () => {
       const response = await fetch(`/api/items/${itemId}`);
       const data = await response.json();
-      setItemInfo(data[0])
+      setItemInfo(data)
 
       console.log("resp itemInfo", data)
     }
@@ -43,7 +43,7 @@ export default function EditItem() {
 
   return (
     <div className="flex flex-center">
-      <Form submitForm={submitForm} itemInfo={itemInfo} redirect={`/product?id=${itemId}`}/>
+      <Form label={"Edit"} submitForm={submitForm} itemInfo={itemInfo} redirect={`/product?id=${itemId}`}/>
     </div>
     
   )

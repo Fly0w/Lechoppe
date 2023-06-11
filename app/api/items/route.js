@@ -18,7 +18,7 @@ export const POST = async (req) => {
 }
 
 
-// Endpont to get the 50 first items in the database
+// Endpoint to get the 50 first items in the database
 export const GET = async (req) => {
     try {
         await connectToDB();

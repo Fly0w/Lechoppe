@@ -3,11 +3,11 @@ import Item from "@/models/items";
 
 // Endpoint to add a review to an item
 export const PATCH = async (req, { params }) => {
-    const { creator, text} = await req.json();
+    const { creator, text, date} = await req.json();
     try {
         await connectToDB();
 
-        const reviewItem = await Item.find({_id : params.id})
+        const reviewItem = await Item.findOne({_id : params.id})
 
         console.log(creator, text)
         //If the Item doesn't exist
@@ -15,13 +15,16 @@ export const PATCH = async (req, { params }) => {
             return new Response("Item not found", {status: 404})
         }
 
-        reviewItem[0].reviews.push({
+        console.log(date)
+
+        reviewItem.reviews.push({
             creator: creator,
-            text: text
+            text: text,
+            date: date
         });
 
       
-        await reviewItem[0].save();
+        await reviewItem.save();
 
         return new Response(JSON.stringify(reviewItem), {status: 200})
 

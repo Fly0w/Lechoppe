@@ -1,13 +1,16 @@
 import ReviewCard from "./ReviewCard"
 
-const ListReviews = ({ reviews }) => {
+const ListReviews = ({ reviews, getItemInfo }) => {
+
   return (
-    <div className="border border-cyan-700 w-3/6 h-44">
-      <label>User's reviews for this item</label>
-      {reviews
-      ? reviews.map((review) => 
-        <ReviewCard creator={review.creator} text={review.text}/>)
-      : <p>Loading...</p>}
+    <div className="border-4 rounded-lg border-cyan-600 w-3/6 h-44">
+      <label className=" font-montserrat">User's reviews for this item</label>
+      <div className="flex flex-raw h-36 overflow-x-scroll overflow-y-hidden">
+        {reviews
+        ? reviews.map((review, key) => 
+          <ReviewCard key={key} creator={review.creator} text={review.text} date={review.date} _id={review._id} getItemInfo={getItemInfo}/>)
+        : <p>Loading...</p>}
+      </div>
     </div>
   )
 }

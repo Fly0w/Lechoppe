@@ -18,6 +18,7 @@ export default function CreateItem() {
       })
       console.log("sending'info patch")
       return(response)
+      
     } catch (error) {
       console.log(error)
     }
@@ -26,7 +27,7 @@ export default function CreateItem() {
   
   return (
     <div className="flex flex-center">
-      <Form submitForm={submitForm} redirect={"/"}/>
+      <Form label={"Create"} submitForm={submitForm} redirect={"/"}/>
     </div>
     
   )

@@ -116,7 +116,7 @@
 }
 
 .add_to_cart_btn {
-  @apply rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all text-center text-sm flex items-center justify-center h-9 hover:ring-4 hover:ring-white;
+  @apply rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all text-center text-sm flex items-center justify-center h-9 hover:ring-4 hover:ring-white w-full;
 }
 
 .add_review_btn {
@@ -145,6 +145,10 @@
 
 .form_textarea {
   @apply flex rounded-lg h-12 mb-2 p-3 text-sm text-emerald-800 outline-blue-300 border border-slate-400;
+}
+
+.add_category {
+  @apply flex rounded-lg h-8 p-2 mx-3 text-sm text-emerald-800 outline-green-700 border border-slate-400 w-4/6;
 }
 
 .flex-center {

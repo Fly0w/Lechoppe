@@ -14,13 +14,23 @@ const ItemSchema = new Schema({
         required: [true, "Price is required"]
     },
     categories: {
-        type: [String],
+        type: String,
         required: [true, "Categories are required"]
     },
     reviews: {
         type: [{
-            creator: String,
-            text: String,
+            creator: {
+                type: String,
+                required: true
+              },
+            text: {
+                type: String,
+                required: true
+              },
+            date: {
+                type: String,
+                required: true
+              }
         }],
     },    
     urls: {

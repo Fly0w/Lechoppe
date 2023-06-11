@@ -9,6 +9,7 @@ export const POST = async (req) => {
         await connectToDB();
 
         console.log("ok api")
+        console.log(categories)
 
         const newItem = new Item({
             urls: urls,
