@@ -11,28 +11,46 @@ const Form = ({ label, submitForm, itemInfo, redirect }) => {
       { title: "img3", src: "", alt: "" },
       { title: "img4", src: "", alt: "" }
     ]);
-    const [categories, setCategories] = useState("");
+    const [categoriesItem, setCategoriesItem] = useState("");
     const [price, setPrice] = useState(0);
     const [description, setDescription] = useState("");
+
+    const [listCategories, setListCategories] = useState([])
 
     const router = useRouter();
         
 
     useEffect(() => {
-      console.log(categories)
-    }, [categories])
+      getCategories()
+    }, [])
     
 
+    useEffect(() => {
+      console.log(listCategories)
+    }, [listCategories])
+    
     useEffect(() => {
       if(itemInfo){
         setItemName(itemInfo.name)
         setUrls(itemInfo.urls)
-        setCategories(itemInfo.categories)
+        setCategoriesItem(itemInfo.categories)
         setPrice(itemInfo.price)
         setDescription(itemInfo.description)
       }
     }, [itemInfo])
     
+    //We need to get all the catageories to display the list of categories
+    const getCategories = async () => {
+      try {
+        const response = await fetch("/api/categories")
+        const data = await response.json()
+        setListCategories(data)
+        
+        
+      } catch (error) {
+        console.log(error)
+      }
+    }
 
 
     if (price < 1){
@@ -48,7 +66,7 @@ const Form = ({ label, submitForm, itemInfo, redirect }) => {
         const response = await submitForm({
           itemName : itemName,
           urls : urls,
-          categories : categories,
+          categories : categoriesItem,
           price : price,
           description : description
         });
@@ -125,21 +143,24 @@ const Form = ({ label, submitForm, itemInfo, redirect }) => {
 {/* Item categories */}
         <label className="form_label">
             <span className="font-semibold text-base text-gray-700">Item categories :</span>
+
             <select 
             className="h-12 border border-sky-400"  
-            value={categories} 
-            onChange={(event) => setCategories(event.target.value)}>
+            value={categoriesItem} 
+            onChange={(event) => setCategoriesItem(event.target.value)}>
               <option value="">Select a Category</option>
-              <optgroup className="font-bold"  label="Games">
-                <option value="Games Minecraft">Minecraft</option>
-                <option value="Games Pokemon">Pokemon</option>
-                <option value="Games Genshin Impact">Genshin Impact</option>
-              </optgroup>
-              <optgroup className="font-bold" label="Anime">
-                <option value="Anime Attack On Titan">Attack On Titan</option>
-                <option value="Anime Demon Slayer">Demon Slayer</option>
-                <option value="Anime Bleach">Bleach</option>
-              </optgroup>
+              {listCategories[0] 
+              ?(listCategories.map((cat, key) => (
+                  <optgroup key={key} className="font-bold" label={cat.category}>
+                    {cat.subcategories.map((subcat, key) => (
+                      <option key={key} value={`${cat.category} ${subcat}`}>
+                        {subcat}
+                      </option>
+                    ))}
+                  </optgroup>
+                ))
+              ) 
+              :(<></>)}
             </select>
         </label>
 

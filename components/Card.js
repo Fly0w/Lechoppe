@@ -1,49 +1,22 @@
 'use client'
-// const item = {
-//     _id: "3472697Fiegfze3",
-//     categories: ['games'],
-//     description: "A beautiful dagger",
-//     name: "Dagger game",
-//     price: 2000,
-//     reviews: [],
-//     urls: [
-//         {   
-//         title: 'img1', 
-//         src: 'https://cdna.artstation.com/p/marketplace/presentation_asse', 
-//         alt: 'dagger', _id: '647c7abb5899c613907b36cd'
-//         },
-//         {   
-//         title: 'img1', 
-//         src: 'https://cdna.artstation.com/p/marketplace/presentatio', 
-//         alt: 'dagger', _id: '647c7abb5899c613907b36cd'
-//         },
-//         {   
-//         title: 'img1', 
-//         src: 'https://cdna.artstation.com/p/marketplace/presentation_', 
-//         alt: 'dagger', _id: '647c7abb5899c613907b36cd'
-//         }
-//     ]
-// }
-
-
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation';
-
 
 const Card = ({ item }) => {
     const [selectedImg, setSelectedImg] = useState(item.urls[0].title);
     const [selectedUrl, setSelectedUrl] = useState(item.urls[0].src);
     const [selectedAlt, setSelectedAlt] = useState(item.urls[0].alt);
 
+    useEffect(() => {
+        setSelectedImg(item.urls[0].title)
+        setSelectedUrl(item.urls[0].src)
+        setSelectedAlt(item.urls[0].alt)
+    }, [item])
+    
 
     const router = useRouter();
 
-    // useEffect(() => {
-    //     console.log(selectedImg)
-    
-    // }, [selectedImg])
-    
     const goToItem = () => {
         router.push(`/product?id=${item._id}`)
     }

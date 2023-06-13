@@ -1,7 +1,11 @@
 'use client'
 
+import LoginForm from "@/components/LoginForm"
+
 export default function LogIn() {
   return (
-    <p>Login page here</p>
+  <div className="flex flex-col align-middle justify-center items-center content-center">
+    <LoginForm />
+  </div>
   )
 }

@@ -15,11 +15,8 @@ export default function RootLayout({ children }) {
         <div className='main'>
         </div>
 
-
         <main className="">
-
           <Nav />
-
           <div className="flex-center my-6 h-20">
             <Link href="/" >
               <Image 
@@ -30,9 +27,9 @@ export default function RootLayout({ children }) {
               />
             </Link>
           </div>
-
           {children}
         </main> 
+        
       </body>
     </html>
   )

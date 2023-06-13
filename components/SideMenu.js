@@ -1,8 +1,10 @@
 'use client'
 
 import { useState, useEffect } from "react"
-import SearchBar from "./SearchBar"
 import { useRouter } from "next/navigation"
+
+import SearchBar from "./SearchBar"
+import SubCategories from "./SubCategories"
 
 const SideMenu = ({ setSearchCategories }) => {
   const router = useRouter();
@@ -10,22 +12,16 @@ const SideMenu = ({ setSearchCategories }) => {
   const [userSearch, setUserSearch] = useState("");
 
   const [categories, setCategories] = useState([])
-
   const [newCat, setNewCat] = useState(false)
-  const [newCatGames, setNewCatGames] = useState(false)
-  const [newCatAnime, setNewCatAnime] = useState(false)
-
   const [newCatName, setNewCatName] = useState("")
-  const [newCatGamesName, setNewCatGamesName] = useState("")
-  const [newCatAnimeName, setNewCatAnimeName] = useState("")
 
   useEffect(() => {
     getCategories()
-    console.log("start", categories)
+    // console.log("start", categories)
   }, [])
 
   useEffect(() => {
-    console.log("cat", categories)
+    // console.log("cat", categories)
   }, [categories])
   
   
@@ -71,11 +67,6 @@ const SideMenu = ({ setSearchCategories }) => {
     }
   }
 
-  // const category = {
-  //   games : ["Minecraft", "Pokemon", "Genshin Impact"],
-  //   animes : ["Attack On Titan", "Demon Slayer", "Bleach"],
-  // }
-
   const handleSearch = (search) => {
     setUserSearch(search) 
   }
@@ -101,73 +92,22 @@ const SideMenu = ({ setSearchCategories }) => {
         </div>
         : <div></div>
       }
-
-
-{/* Games */}
       <h2 onClick={() => setSearchCategories("All")} className=" text-teal-950 font-bold cursor-pointer mb-2">All Categories</h2>
 
-      <div className="flex flex-raw items-center">
-       <h2 onClick={() => setSearchCategories("Games")} className=" text-teal-950 font-bold cursor-pointer">Games</h2> 
-       <img className="ml-2 cursor-pointer" onClick={() => setNewCatGames(!newCatGames)} src="assets/icons/plus.png" height={17} width={17}/>
-      </div>
-
-      <ul className=" px-8 list-disc">
-        {categories[0]
-          ?categories[0].subcategories.map((game) => {
-          if (game.toLowerCase().includes(userSearch.toLowerCase())){
-            return (<li key={game} onClick={() => setSearchCategories(game)} className="cursor-pointer hover:text-slate-50">{game}</li>)
-          }
-        })
-          :<></>
-        }
-      </ul>
-      {newCatGames
-        ? <div className="flex flex-raw items-center">
-            <input
-                type="text"
-                onChange={(event) => setNewCatGamesName(event.target.value)}
-                placeholder="New Game"
-                required
-                className="add_category"
-            />
-            <button className="bg-green-500 text-white rounded-full py-1.5 px-3 h-min" onClick={() => createNewSubCategory("Games", newCatGamesName)}>Add</button>
-        </div>
-        : <div></div>
-      }
-
-
-{/* Anime */}
-      <div className="flex flex-raw items-center mt-5">
-        <h2 onClick={() => setSearchCategories("Anime")} className=" text-teal-950 font-bold cursor-pointer ">Anime</h2>
-        <img className="ml-2 cursor-pointer" onClick={() => setNewCatAnime(!newCatAnime)} src="assets/icons/plus.png" height={17} width={17}/>
-      </div>
-
-      <ul className=" px-8 list-disc">
+{/* List of categories */}
       {categories[0]
-        ?categories[1].subcategories.map((anime) => {
-        if (anime.toLowerCase().includes(userSearch.toLowerCase())){
-          return (<li key={anime} onClick={() => setSearchCategories(anime)} className="cursor-pointer hover:text-slate-50">{anime}</li>)
-        }
-      })
-        :<></>
-        }
-      </ul>
-      {newCatAnime
-        ? <div className="flex flex-raw items-center">
-            <input
-                type="text"
-                onChange={(event) => setNewCatAnimeName(event.target.value)}
-                placeholder="New Anime"
-                required
-                className="add_category"
-            />
-            <button className="bg-green-500 text-white rounded-full py-1.5 px-3 h-min" onClick={() => createNewSubCategory("Anime",newCatAnimeName)}>Add</button>
-        </div>
-        : <div></div>
+      ?categories.map((list, key) => 
+        <SubCategories 
+          key={key}
+          category={list.category} 
+          subcategories={list.subcategories} 
+          userSearch={userSearch}
+          createNewSubCategory={createNewSubCategory}
+          setSearchCategories={setSearchCategories}/>
+      )
+      :<></>
       }
-
-
-
+    
       <button 
         type="button" 
         className="new_item"
