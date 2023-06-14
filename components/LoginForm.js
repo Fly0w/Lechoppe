@@ -1,39 +1,40 @@
+// florian.budniewski@hotmail.com
+// dofuspowa62300xD!
+
 'use client'
 import Link from "next/link"
 import { useState, useEffect } from "react"
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation"
+import { useAuth } from "@/app/auth"
 
 const LoginForm = ({  }) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [loginStatus, setLoginStatus] = useState("")
 
-  const router = useRouter();
+  const router = useRouter()
+  const { login } = useAuth()
 
   useEffect(() => {
 
     },[])
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit(e)
+    }
+  };
 
-    
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     console.log("Sending")
     e.preventDefault(); //Preventing browser auto refresh
     try {
-      //Send the info to the db to check user's credentials
-      const response = await fetch("/api/users/login", {
-        method: "POST",
-        body: JSON.stringify({
-          email: email,
-          password: password
-        })
-      });
+      const loginUser = login({email : email, password: password})
+      console.log(loginUser)
+      setLoginStatus(loginUser)
 
-      const data= await response.json()
-        
-      console.log(data)
-
-      if(response.ok) {
-        alert("You are now logged in !")
+      if(loginUser) {
+        router.push("/")
       } 
     } catch (error) {
       console.log(error)
@@ -43,12 +44,12 @@ const LoginForm = ({  }) => {
 
   return (
     <section className="form_login">
-      <h1 className="text-center text-4xl">
-        Login
-      </h1>
+      <h1 className="text-center text-4xl">Login</h1>
+      <p className="text-center text-red-600 mb-1">{loginStatus}</p>
       <form 
         onSubmit={(e) => handleSubmit(e)}
         className="mt-5 w-full flex-col"
+        onKeyDown={(e) => handleKeyPress(e)}
       >
         <label>
           <div className="mb-7">
