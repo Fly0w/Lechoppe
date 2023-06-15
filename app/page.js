@@ -5,9 +5,6 @@ import ListCards from "@/components/ListCards"
 import SelectionSearch from "@/components/SelectionSearch"
 import { useState, useEffect } from "react"
 
-
-import React from 'react'
-
 const Home = () => {
   const [searchCategories, setSearchCategories] = useState("All")
   const [listItems, setListItems] = useState([])

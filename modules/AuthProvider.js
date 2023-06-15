@@ -1,6 +1,9 @@
-import { useState, useEffect } from 'react';
+'use client'
 
-export function useAuth() {
+import { useState, useEffect } from 'react';
+import AuthContext from './AuthContext';
+
+export default function AuthProvider({ children }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
 
@@ -53,7 +56,7 @@ export function useAuth() {
         //Send the info to the db to check user's credentials
         const responseCred = await checkCredentials(userInfo) ;
         const dataCred= await responseCred.json()
-        if(dataCred){
+        if(await dataCred){
             //get the user's info
             const responseInfo = await getUserInfo(userInfo) ;
             const info= await responseInfo.json()
@@ -85,13 +88,9 @@ export function useAuth() {
         return
     }
 
-
-
-
-  return {
-    isLoggedIn,
-    user,
-    login,
-    logout,
-  };
+  return (
+    <AuthContext.Provider value={{ login, logout, user, isLoggedIn }}>
+        {children}
+    </AuthContext.Provider>
+    );
 }

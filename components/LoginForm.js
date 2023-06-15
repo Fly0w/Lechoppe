@@ -3,9 +3,9 @@
 
 'use client'
 import Link from "next/link"
-import { useState, useEffect } from "react"
+import { useEffect, useState, useContext } from "react";
 import { useRouter } from "next/navigation"
-import { useAuth } from "@/app/auth"
+import AuthContext from "@/modules/AuthContext";
 
 const LoginForm = ({  }) => {
   const [email, setEmail] = useState("")
@@ -13,7 +13,7 @@ const LoginForm = ({  }) => {
   const [loginStatus, setLoginStatus] = useState("")
 
   const router = useRouter()
-  const { login } = useAuth()
+  const { login } = useContext(AuthContext)
 
   useEffect(() => {
 
