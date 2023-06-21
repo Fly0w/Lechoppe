@@ -26,3 +26,4 @@ export const POST = async (req) => {
         return new Response(JSON.stringify("Error while checking credentials"), {status: 500})
     }
 }
+

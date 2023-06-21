@@ -1,19 +1,18 @@
 'use client'
 
 // TO DO:
-// - Fix LOGIN LOGOUT affichage pas actualisé
 
 import Link from "next/link";
 import { SlBasket } from "react-icons/sl";
 import { useEffect, useState, useContext } from "react";
-import CartContext from "@/modules/CartContext";
 import AuthContext from "@/modules/AuthContext";
+import CartContext from "@/modules/CartContext";
+import Basket from "./Basket";
+
 
 const Nav = () => {
-  const [toggleCart, setToggleCart] = useState(false)
-
-  const { isLoggedIn, logout, user } = useContext(AuthContext);
-  const { cartItems } = useContext(CartContext);
+  const { toggleCart, setToggleCart } = useContext(CartContext);
+  const { isLoggedIn, logout } = useContext(AuthContext);
 
   return (    
     <>   
@@ -28,9 +27,6 @@ const Nav = () => {
         </div>
 
         <div className="flex items-center">
-          
-          
-
           {isLoggedIn
           ?<div className="flex flex-raw">
             <button onClick={() => setToggleCart(!toggleCart)}>
@@ -38,11 +34,7 @@ const Nav = () => {
             </button>
             {toggleCart
               ?
-              <div className="absolute top-7 flex flex-col flex-nowrap w-fit h-fit p-2 text-center justify-start items-center border-2 rounded-xl border-teal-700 bg-white bg-opacity-95">
-                <p className="mb-2">Your Inventory</p>
-                <button className=" px-3 border-2 border-orange-400 bg-yellow-200 rounded-full font-bold text-lg">Proceed to checkout</button>
-
-              </div>
+              <Basket />
               : <></>
             }
             <Link href="/profile" >

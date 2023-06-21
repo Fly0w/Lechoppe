@@ -1,12 +1,15 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useRouter } from 'next/navigation';
+import CartContext from '@/modules/CartContext';
 
 const Card = ({ item }) => {
     const [selectedImg, setSelectedImg] = useState(item.urls[0].title);
     const [selectedUrl, setSelectedUrl] = useState(item.urls[0].src);
     const [selectedAlt, setSelectedAlt] = useState(item.urls[0].alt);
+
+    const { addToCart } = useContext(CartContext);
 
     useEffect(() => {
         setSelectedImg(item.urls[0].title)
@@ -61,7 +64,7 @@ const Card = ({ item }) => {
             <button 
                 type="button" 
                 className="add_to_cart_btn"
-                onClick={()=> console.log("add to cart")}>Add to cart
+                onClick={()=> addToCart(item)}>Add to cart
             </button>
         </div>
         

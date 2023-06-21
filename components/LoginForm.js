@@ -8,8 +8,8 @@ import { useRouter } from "next/navigation"
 import AuthContext from "@/modules/AuthContext";
 
 const LoginForm = ({  }) => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("florian.budniewski@hotmail.com")
+  const [password, setPassword] = useState("dofuspowa62300xD!")
   const [loginStatus, setLoginStatus] = useState("")
 
   const router = useRouter()
@@ -55,6 +55,7 @@ const LoginForm = ({  }) => {
           <div className="mb-7">
             <p className="font-semibold text-base text-gray-700 mb-1">Email adress :</p>
             <input
+            value={email}
               type="text"
               onChange={(event) => setEmail(event.target.value)}
               placeholder="Email"
@@ -68,6 +69,7 @@ const LoginForm = ({  }) => {
           <div className="mb-7">
             <p className="font-semibold text-base text-gray-700 mb-1">Password :</p>
             <input
+            value={password}
               type="password"
               onChange={(event) => setPassword(event.target.value)}
               placeholder="Password"

@@ -13,20 +13,7 @@ const UserProfile = ({}) => {
   const [toggleEditPhoto, setToggleEditPhoto] = useState(false)
   const [toggleEditUsername, setToggleEditUsername] = useState(false)
 
-
-
   const { user } = useContext(AuthContext);
-
-  // const user = {
-  //   _id: "648abb510601b2b780c019d8",
-  //   username: "Kostya",
-  //   email: "kostya@gmail.com",
-  //   access: "user",
-  //   image: "",
-  //   orders: [],
-  //   basket: [],
-  //   __v: 0
-  // }
 
   return (
     <div className='flex flex-col w-full p-4 border-2 border-teal-700 rounded-xl'>
