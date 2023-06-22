@@ -13,7 +13,8 @@ export default function CartProvider({ children }) {
       id: item._id,
       itemName: item.name,
       image: item.urls[0].src,
-      quantity: 1
+      quantity: 1,
+      price: item.price
     }
 
     // Check if the item is already in the cart
@@ -33,6 +34,7 @@ export default function CartProvider({ children }) {
     }
   };
 
+  // Function that increases the quantity of one item in the basket
   const increaseQty = (item) => {
     const exist = cartItems.find((x) => x.id === item.id)
     setCartItems(
@@ -41,7 +43,7 @@ export default function CartProvider({ children }) {
     )
   }
 
-  // Function that increases the quantity of one item in the basket
+  // Function that decreases the quantity of one item in the basket
   const decreaseQty = (item) => {
     const exist = cartItems.find((x) => x.id === item.id)
     console.log(exist)
